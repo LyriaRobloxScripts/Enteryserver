@@ -1,3 +1,25 @@
+-- Script Alwi Hub 
+local function playNotificationSound()
+    local soundService = game:GetService("SoundService")
+    local notificationSound = Instance.new("Sound")
+    
+    notificationSound.SoundId = "rbxassetid://8745692251"
+    notificationSound.Volume = 0.5
+    notificationSound.Parent = soundService
+
+    notificationSound:Play()
+end
+
+local function sendNotification(title, text)
+    game:GetService('StarterGui'):SetCore('SendNotification', {
+        Title = title,
+        Text = text,
+        Icon = 'http://www.roblox.com/asset/?id=8904334671',
+        Duration = 5,
+    })
+end
+
+-- ^^^ Script Alwi Hub
 local itemsFolder = game:GetService("Workspace").Eggs
 
 local function createESP(item, index)
@@ -59,3 +81,10 @@ for _, item in pairs(itemsFolder:GetChildren()) do
         index = index + 1
     end
 end
+
+
+playNotificationSound()
+sendNotification('Lyria Hub Notive', 'Dont Speed Or something there game having anticheat')
+sendNotification('Lyria Hub Notive', 'Igrone Good stuff [If You dont see clover Esp Exexutor the script again')
+
+
