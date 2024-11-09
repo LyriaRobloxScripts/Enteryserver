@@ -1,0 +1,61 @@
+local itemsFolder = game:GetService("Workspace").Eggs
+
+local function createESP(item, index)
+    if item:FindFirstChild("ESP") then return end
+
+    local espGui = Instance.new("BillboardGui")
+    espGui.Name = "ESP"
+    espGui.AlwaysOnTop = true
+    espGui.Size = UDim2.new(10, 0, 10, 0)
+    espGui.StudsOffset = Vector3.new(0, 2, 0)
+
+    local textLabel = Instance.new("TextLabel", espGui)
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextColor3 = Color3.new(1, 0, 0)
+    textLabel.TextStrokeTransparency = 0.5
+    textLabel.TextScaled = true
+    textLabel.Text = "["..tostring(index).."] " .. item.Name
+
+    espGui.Parent = item
+    espGui.Adornee = item
+
+    local arrow = Instance.new("Part")
+    arrow.Size = Vector3.new(1, 0.5, 1)
+    arrow.Shape = Enum.PartType.Wedge
+    arrow.Anchored = true
+    arrow.CanCollide = false
+    arrow.Color = Color3.new(1, 0, 0)
+
+    arrow.Position = item.Position + Vector3.new(0, 5, 0)
+    arrow.Parent = item
+
+    local function updateArrowOrientation()
+        local cameraPosition = game.Workspace.CurrentCamera.CFrame.Position
+        local direction = (cameraPosition - arrow.Position).unit
+        arrow.CFrame = CFrame.new(arrow.Position, arrow.Position + direction)
+    end
+
+    game:GetService("RunService").RenderStepped:Connect(updateArrowOrientation)
+
+    local arrowGui = Instance.new("BillboardGui")
+    arrowGui.Name = "ArrowESP"
+    arrowGui.AlwaysOnTop = true
+    arrowGui.Size = UDim2.new(0, 6, 0, 6)
+    arrowGui.StudsOffset = Vector3.new(0, 2, 0)
+
+    local arrowIcon = Instance.new("ImageLabel", arrowGui)
+    arrowIcon.Size = UDim2.new(1, 0, 1, 0)
+    arrowIcon.BackgroundTransparency = 1
+    arrowIcon.Image = "rbxassetid://8745692251"
+    arrowIcon.ImageColor3 = Color3.new(1, 0, 0)
+    arrowGui.Parent = arrow
+end
+
+local index = 1
+for _, item in pairs(itemsFolder:GetChildren()) do
+    if item:IsA("BasePart") then
+        createESP(item, index)
+        index = index + 1
+    end
+end
