@@ -15,7 +15,7 @@ local function sendNotification(title, text)
         Title = title,
         Text = text,
         Icon = 'http://www.roblox.com/asset/?id=8904334671',
-        Duration = 5,
+        Duration = 10,
     })
 end
 
